@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top" />
+  </head>
+  <body>
+    <div id="form">
+      <br />
+      <input type="checkbox" name="column" id="active_col" /> Active Column<br />
+      <input type="checkbox" name="row" id="active_row" /> Active Row<br />
+      <input type="checkbox" name="cell" id="active_cell" /> Active Cell<br />
+      <br />
+      <hr />
+      <br />
+      <br />
+      <label for="col_number"><b>Column Letter</b></label>
+      <input type="text" placeholder="Enter Column Letter" id="colnumber" />
+      <br />
+      <br />
+      <hr />
+      <br />
+      <br />
+      <label for="row_number"><b>Row Number</b></label>
+      <input type="text" placeholder="Enter Row Number" id="rownumber" />
+      <br />
+      <br />
+      <hr />
+      <br />
+      <br />
+      <label for="cell_number"><b>Cell Number</b></label>
+      <input type="text" placeholder="Enter Cell Number" id="cellnumber" />
+      <br />
+      <br />
+      <hr />
+      <br />
+      <label for="col_width"><b>Column Width</b></label>
+      <input type="text" placeholder="Enter Column Width" id="colwidth" />
+      <input
+        type="range"
+        min="1"
+        max="10000"
+        value="50"
+        class="slider"
+        id="colwidthRange"
+      />
+      <br />
+      <br />
+      <label for="row_height"><b>Row Height</b></label>
+      <input type="text" placeholder="Enter Row Height" id="rowheight" />
+      <input
+        type="range"
+        min="1"
+        max="10000"
+        value="50"
+        class="slider"
+        id="rowheightRange"
+      />
+      <br />
+      <br />
+      <input type="button" value="Update" onclick="update()" />
+      <hr />
+    </div>
+
+    <script>
+      var cell_number = document.getElementById("cellnumber");
+      var col_number = document.getElementById("colnumber");
+      var col_width = document.getElementById("colwidth");
+      var row_number = document.getElementById("rownumber");
+      var row_height = document.getElementById("rowheight");
+      var col_width_range = document.getElementById("colwidthRange");
+      var row_height_range = document.getElementById("rowheightRange");
+      col_width_range.oninput = function () {
+        col_width.value = this.value;
+      };
+      row_height_range.oninput = function () {
+        row_height.value = this.value;
+      };
+
+      function update() {
+        var active_col = document.getElementById("active_col").checked;
+        var active_row = document.getElementById("active_row").checked;
+        var active_cell = document.getElementById("active_cell").checked;
+
+        google.script.run
+          .withSuccessHandler(function (result) {})
+          .updateSize({
+            cell_number: cell_number.value,
+            active_col: active_col,
+            active_row: active_row,
+            active_cell: active_cell,
+            col_number: col_number.value,
+            col_width: col_width.value,
+            row_number: row_number.value,
+            row_height: row_height.value,
+          });
+      }
+    </script>
+    <script src="actionEngine.js"></script>
+    <script src="actionEntity.js"></script>
+    <script src="createEntity.js"></script>
+    <script src="operate.js"></script>
+    <script src="test.js"></script>
+  </body>
+</html>
